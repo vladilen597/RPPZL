@@ -48,10 +48,7 @@ connection.end(err =>{
         console.log("\nDatabase connection closed");
     }
 });
-<<<<<<< HEAD
 
 app.get('/', (require, result) => {
     result.send("Имя: " + blyat);
 });  
-=======
->>>>>>> 7ca206c365a594a045337e128cb801ad5ae460a6
