@@ -1,13 +1,24 @@
 const mysql = require('mysql');
 
 const express = require('express');
+const bodyParser = require('body-parser');
+const { urlencoded } = require('body-parser');
 const app = express();
 const port = 3000;
 
+app.use(express.static('./'));
+
+app.set('view engine', 'pug');
+
+const urlencodedParser = bodyParser.urlencoded({extended: false});
+
 app.listen(port, () => {
     console.log(`Port - ${port}`)
-})
+});
 
+app.get('/', function(req, res){
+    res.sendFile('index.html', { root: __dirname })
+})
 
 const connection = mysql.createConnection({
     host: "DESKTOP-DV80UAL",
@@ -15,6 +26,12 @@ const connection = mysql.createConnection({
     database: "lab1",
     password: "zapusta"
 });
+
+
+let zapros = "SELECT * FROM clients";
+let DBcode = 0;
+let name = "";
+let lastname = "";
 
 connection.connect(err => {
     if (err) {
@@ -24,34 +41,48 @@ connection.connect(err => {
     else{
         console.log("Database connected\n");
     }
-})
-
-let zapros = "SELECT * FROM clients";
-let blyat;
-
-connection.query(zapros, (err, result)=>{
-    if (err) {
-        console.log(err);
-    }
-    else {
-        console.log(blyat = result[2]["Firstname"]);
-         
-    }
-})
-
-connection.end(err =>{
-    if (err) {
-        console.log(err);
-        return err;
-    }
-    else{
-        console.log("\nDatabase connection closed");
-    }
 });
-<<<<<<< HEAD
 
-app.get('/', (require, result) => {
-    result.send("Имя: " + blyat);
-});  
-=======
->>>>>>> 7ca206c365a594a045337e128cb801ad5ae460a6
+// app.get('/', (req, res) => {
+//     res.send("Имя: " + firstName);
+// });  
+
+app.get('/db', urlencodedParser, (req, res)=>{
+    res.sendFile(__dirname + "/db.html");
+})
+
+app.post('/db', urlencodedParser, function (req, res){
+
+
+    connection.query(zapros, (err, result)=>{
+        if (err) {
+            console.log(err);
+        }
+        else {
+            name = result[1]["Firstname"];
+            lastname = result[1]["Lastname"];
+
+            DBcode = result[1]["Code"];
+
+            console.log(DBcode);
+        }
+    })
+    
+    console.log(req.body);
+    if(req.body.Code == DBcode){
+        res.send(`Имя: ${name}<br>Фамилия: ${lastname}`);
+    } else {
+        res.send('Запись с таким кодом отсутствует!');
+    }
+    
+})
+
+// connection.end(err =>{
+//     if (err) {
+//         console.log(err);
+//         return err;
+//     }
+//     else{
+//         console.log("\nDatabase connection closed");
+//     }
+// });
