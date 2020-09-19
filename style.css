@@ -1,7 +1,19 @@
 body{
     font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
 }
 
 #form{
     width: 5%;
+}
+
+a{
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+    transition: 0.3s;
+}
+
+a:hover{
+    color: rgb(25, 0, 255);
 }
