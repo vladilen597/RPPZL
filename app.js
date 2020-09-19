@@ -74,7 +74,6 @@ app.post('/db', urlencodedParser, function (req, res){
     } else {
         res.send('Запись с таким кодом отсутствует!');
     }
-<<<<<<< HEAD
     
 })
 
@@ -87,10 +86,4 @@ app.post('/db', urlencodedParser, function (req, res){
 //         console.log("\nDatabase connection closed");
 //     }
 // });
-=======
 });
-
-app.get('/', (require, result) => {
-    result.send("Имя: " + blyat);
-});  
->>>>>>> 45be92fe5175f970bdf472313b4b01228a5d8de5
