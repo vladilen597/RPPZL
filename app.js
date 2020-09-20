@@ -30,7 +30,6 @@ const connection = mysql.createConnection({
 
 let zapros = "SELECT * FROM clients";
 let count = "SELECT COUNT(Code) FROM clients";
-let countCode = 0;
 let DBcode = 0;
 let name = "";
 let lastname = "";
@@ -74,11 +73,13 @@ app.get('/db', urlencodedParser, (req, res)=>{
     res.sendFile(__dirname + "/db.html");
 })
 
-app.post('/db', urlencodedParser, function (req, res){
+app.post('/db', urlencodedParser, (req, res) => {
     console.log(req.body)
     
     if(req.body.Code == DBcode){
         res.send(`
+        Код записи: ${DBcode}<br>
+        <br>Имя: ${name}
         <br>Фамилия: ${lastname}
         <br>Отчество: ${MiddleName}
         <br>Дата рождения: ${DateOfBirth}
@@ -185,25 +186,116 @@ app.post('/db', urlencodedParser, function (req, res){
             }
         }
     })
-    
-    connection.query(count, (err, result)=>{
-        if (err) {
-            console.log(err);
-        }
-        else {
-            console.log(countCode = result);
-        }
-    })
-
-    
 })
 
-// connection.end(err =>{
-//     if (err) {
-//         console.log(err);
-//         return err;
-//     }
-//     else{
-//         console.log("\nDatabase connection closed");
-//     }
-// });
+app.post('/add', urlencodedParser, (req, res) => {
+    res.sendFile(__dirname + "/add.html");
+});
+
+app.post('/submit', urlencodedParser, (req, res) =>{
+    res.send('Запись прошла успешно')
+    console.log(req.body);
+
+    if(req.body.Gender === "Мужской") {
+        req.body.Gender = 1;
+    } else { 
+        req.body.Gender = 0;
+    }
+
+    if(req.body.MarialStatus === "Не женат/Не замужем") {
+        req.body.MarialStatus = 0;
+    } else if (req.body.MarialStatus === "Женат/Замужем"){ 
+        req.body.MarialStatus = 1;
+    } else if (req.body.MarialStatus === "Разведен/Разведена"){
+        req.body.MarialStatus = 2;
+    } else req.body.MarialStatus = 3;
+
+    if(req.body.Citizenship === "Белорусское") {
+        req.body.Citizenship = 1;
+    } else { 
+        req.body.Citizenship = 0;
+    }
+
+    if(req.body.Disability === "Нет") {
+        req.body.Disability = 0;
+    } else { 
+        req.body.Disability = 1;
+    }
+
+    if(req.body.Retiree === "Нет") {
+        req.body.Retiree = 0;
+    } else { 
+        req.body.Retiree = 1;
+    }
+
+    if(req.body.Militarian === "Нет") {
+        req.body.Militarian = 0;
+    } else { 
+        req.body.Militarian = 1;
+    }
+
+
+    var sql = "INSERT INTO `lab1`.`clients` (`Code`, `Lastname`, `Firstname`, `MiddleName`, `DateOfBirth`, `Gender`, `PassportSerial`, `Passport NUM`, `IssuedBy`, `DateOfIssue`, `Identification No`, `PlaceOfBirth`, `TheCityOfLiving`, `TheAdressOfLiving`, `HomePhone`, `MobilePhone`, `E-mail`, `Marial Status`, `Citizenship`, `Disability`, `Retiree`, `Salary`, `Militarian`) VALUES (null, '" + req.body.lastname +
+    "','" + req.body.firstname +
+    "','" + req.body.middleName +
+    "','" + req.body.DateOfBirth +
+    "','" + req.body.Gender +
+    "','" + req.body.PasSerial + 
+    "','" + req.body.PasNUM +
+    "','" + req.body.IssuedBy +
+    "','" + req.body.DateOfIssue +
+    "','" + req.body.idNum +
+    "','" + req.body.PlaceOfBirth +
+    "','" + req.body.TheCityOfLiving +
+    "','" + req.body.TheAdressOfLiving +
+    "','" + req.body.HomePhone +
+    "','" + req.body.MobilePhone +
+    "','" + req.body.Email +
+    "','" + req.body.MarialStatus +
+    "','" + req.body.Citizenship +
+    "','" + req.body.Disability +
+    "','" + req.body.Retiree +
+    "','" + req.body.Salary +
+    "','" + req.body.Militarian + "')";
+    connection.query(sql, (err) => {
+        if (err) {
+            throw err
+        } else {
+            res.status(200);
+        }
+    })
+})
+
+app.post('/remove', urlencodedParser, (req, res) => {
+    res.sendFile(__dirname + "/remove.html");
+});
+
+app.post('/remove/success', urlencodedParser, (req, res) => {
+    
+    console.log(req.body);
+    
+    res.send("Удаление прошло успешно!");
+    sqlRemoval = "DELETE FROM `lab1`.`clients` WHERE (`Code` = '" + req.body.removalCode + "')";
+    connection.query(sqlRemoval, (err) => {
+        if (err) {
+            throw err
+        } else {
+            res.status(200);
+        }
+    });
+});
+
+app.get('/closed', urlencodedParser, (req, res)=>{
+        connection.end(err =>{
+        if (err) {
+            console.log(err);
+            return err;
+        }
+        else{
+            console.log("\nDatabase connection closed");
+        }
+        res.send("Соединение закрыто успешно!");
+    });
+})
+
+

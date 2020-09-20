@@ -7,12 +7,25 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <form action="/db" method="post">
-    <a href="/">Главная</a><a href="#">Запись в БД</a><br><br><br>
+    <form action="/db" method="post" class="from">
     <span %= msg %></span>
     <label><br>Введите код</label>
     <input type="text" name="Code" id="form">
     <button>Отправить</button>
+</form>
+<form action="/closed">
+    <button>Закрыть<br>соединение</button>
+    <span><br>
+        <div class="cur">^</div>
+        <p>Не забудьте нажать</p>
+        <p>при завершении работы</p>
+    </span>
+</form>
+<form action="/add" method="post">
+    <button style="margin-top: 100px; height: 50px; font-size: 20px">Добавить запись</button>
+</form>
+<form action="/remove" method="post">
+    <button style="margin-top: 10px; height: 50px; font-size: 20px; display: block">Удаление записи</button>
 </form>
 </body>
 </html>

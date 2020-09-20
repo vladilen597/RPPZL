@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New file</title>
+</head>
+<body>
+    <style>
+        body{
+            font-size: 20px;
+        }
+        input{
+            font-size: 20px;
+            display: block;
+            margin-bottom: 10px;
+            width: 15%;
+        }
+        select{
+            font-size: 20px;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+    <form action="/submit" method="post">
+        <input style="display: inline-block;" type="text" name="firstname" required placeholder="Имя">
+        <input style="display: inline-block;" type="text" name="lastname" required placeholder="Фамилия">
+        <input style="display: inline-block;" type="text" name="middleName" required placeholder="Отчество">
+        <br> Дата рождения
+        <input type="date" name="DateOfBirth" required placeholder="Дата рождения">
+        <select name="Gender" required>
+            <option name="1">Мужской</option>
+            <option name="0">Женский</option>
+        </select>
+        <input style="display: inline-block;" type="text" name="PasSerial" required placeholder="Серия паспорта">
+        <input style="display: inline-block;" type="text" name="PasNUM" required placeholder="Номер паспорта">
+        <input type="text" name="IssuedBy" placeholder="Место выдачи паспорта">
+        <br>Дата выдачи паспорта
+        <input type="date" name="DateOfIssue" required placeholder="Дата выдачи паспорта">
+        <input type="text" name="idNum" required placeholder="Идентификационный № паспорта">
+        <input type="text" name="PlaceOfBirth" required placeholder="Место рождения">
+        <input type="text" name="TheCityOfLiving" required placeholder="Город проживания">
+        <input type="text" name="TheAdressOfLiving" required placeholder="Адрес проживания">
+        <input type="text" name="HomePhone" placeholder="Домашний телефон">
+        <input type="text" name="MobilePhone" placeholder="Мобильный телефон">
+        <input type="text" name="Email" placeholder="E-mail">
+        Семейное положение
+        <select name="MarialStatus">
+            <option name="0" selected>Не женат/Не замужем</option>
+            <option name="1">Женат/Замужем</option>
+            <option name="2">Разведен/Разведена</option>
+            <option name="3">Вдова/Вдовец</option>
+        </select>
+        Гражданство
+        <select name="Citizenship">
+            <option name="1" selected>Белорусское</option>
+            <option name="0">Иностранное</option>
+        </select>
+        Инвалидность
+        <select name="Disability">
+            <option name="0" selected>Нет</option>
+            <option name="1">Да</option>
+        </select>
+        Пенсионер
+        <select name="Retiree">
+            <option name="0">Нет</option>
+            <option name="1">Да</option>
+        </select>
+        <input type="text" name="Salary" placeholder="Ежемесячный доход">
+        Военный
+        <select name="Militarian">
+            <option name="0">Нет</option>
+            <option name="1">Да</option>
+        </select>
+        <button type="submit">Отправить форму</button>
+    </form>
+</body>
+</html>
